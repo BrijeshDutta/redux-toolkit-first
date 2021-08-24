@@ -2,11 +2,15 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 import { fetchCount } from './counterAPI';
 
+
+//props
 export interface CounterState {
   value: number;
   status: 'idle' | 'loading' | 'failed';
 }
 
+
+//initial state 
 const initialState: CounterState = {
   value: 0,
   status: 'idle',
@@ -27,7 +31,7 @@ export const incrementAsync = createAsyncThunk(
 );
 
 export const counterSlice = createSlice({
-  name: 'counter',
+  name: 'counters',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
