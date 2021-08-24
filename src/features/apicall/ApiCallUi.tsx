@@ -39,7 +39,7 @@ function ApiCallUi() {
 
             {status === 'success' && powerValuationDetails.map((item)=>{
             return (
-                <div key={item.id}>{item.id } | {item.trade} | {item.begtime}</div>
+                <div key={item.id}>{item.id } | {item.trade} | {item.begtime} | {item.endtime}</div>
             )
             })}
 

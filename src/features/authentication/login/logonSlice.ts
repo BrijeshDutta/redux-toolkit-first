@@ -1,7 +1,8 @@
-import { createAsyncThunk , createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk , createSlice, isRejectedWithValue} from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../../../app/store";
 import { User } from "./model";
+
 
 
 
@@ -28,13 +29,29 @@ const initialState: UserDetails = {
 
 export const loginUser = createAsyncThunk(
     'user/login',
-    async (userInput:User) =>{
-        console.log('From the async method', userInput)
-    const response = await axios.post<User>('https://etrmsapiapp.herokuapp.com/api/auth/login/',userInput)
-    //   // The value we return becomes the `fulfilled` action payload
-    //   console.log('response ',response.data);
-    return response.data;
+    async (userInput:User, {rejectWithValue, dispatch, getState}) =>{
+    //     console.log('From the async method', userInput)
+    // const response = await axios.post<User>('https://etrmsapiapp.herokuapp.com/api/auth/login/',userInput)
+    // //   // The value we return becomes the `fulfilled` action payload
+    // //   console.log('response ',response.data);
+    // return response.data;
+    
+    dispatch(updatestatuswhileloading())
 
+
+    try{
+        const response = await axios.post<User>('https://etrmsapiapp.herokuapp.com/api/auth/login/',userInput)
+
+        return response.data;
+
+    } catch (err) {
+        if(!err.response){
+            throw err;
+        }
+
+        return rejectWithValue(err.response)
+
+    }
 
 
     }
@@ -47,6 +64,10 @@ export const loginSlice = createSlice({
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
+        updatestatuswhileloading: (state) => {
+            state.status = 'loading';
+            console.log('Called from updatestatuswhileloading',state.status)
+          }
     },
     extraReducers: (builder) => {
       builder
@@ -59,6 +80,7 @@ export const loginSlice = createSlice({
         })
         .addCase(loginUser.rejected, (state, action) => {
           state.status = 'failed';
+          
           console.log('From rejected ',action.payload);
 
         })
@@ -69,7 +91,7 @@ export const loginSlice = createSlice({
 
 
 
-  export const {  } = loginSlice.actions;
+  export const { updatestatuswhileloading } = loginSlice.actions;
 
   export const selectUserDetails = (state: RootState) => state.loginUser.user;
   export const selectStatus = (state: RootState) => state.loginUser.status;

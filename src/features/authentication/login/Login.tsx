@@ -18,7 +18,8 @@ function Login() {
 
         console.log('Initial User State', user)
 
-    }, [user])
+
+    }, [user, status])
     return (
         <div>
             Login
@@ -50,6 +51,7 @@ function Login() {
                 }}>Login</button>
             </div>
             {status === 'failed' && (<div>failed to login </div>)}
+            {status === 'loading' && (<div>Loading.... </div>)}
             {user.username? <div>{user.username}</div>:<div>Not Logged in </div>}
             
         </div>
