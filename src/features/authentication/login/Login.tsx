@@ -1,6 +1,6 @@
 import React, {useState , useEffect} from 'react'
 import { useAppSelector,useAppDispatch } from '../../../app/hooks';
-import {selectStatus, loginUser, selectUserDetails} from './logonSlice';
+import {selectStatus, loginUser, selectUserDetails, userRegister} from './logonSlice';
 import { User } from "./model";
 function Login() {
 
@@ -49,6 +49,24 @@ function Login() {
                     dispatch(loginUser(newUser))
 
                 }}>Login</button>
+
+
+            </div>
+            <div>
+            <div>
+                <button type="submit" onClick={() => {
+
+                    const newUser:User = {
+                        email:'brijeshdtt@gmail.com',
+                        username: 'brijeshdtt',
+                        password:'brijeshdtt'
+                    }
+                    dispatch(userRegister(newUser))
+
+                }}>Register</button>
+
+
+            </div>
             </div>
             {status === 'failed' && (<div>failed to login </div>)}
             {status === 'loading' && (<div>Loading.... </div>)}

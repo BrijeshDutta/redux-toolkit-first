@@ -57,6 +57,34 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+export const userRegister = createAsyncThunk(
+  'user/register',
+  async (userInput:User, {rejectWithValue}) =>{
+
+
+
+  try{
+
+
+      const response = await axios.post<User>('http://127.0.0.1:8000/api/auth/register/',userInput)
+
+      return response.data;
+
+  } catch (err) {
+      if(!err.response){
+          throw err;
+      }
+
+      return rejectWithValue(err.response)
+
+  }
+
+
+  }
+);
+
+
+
 
 //synchronous call 
 export const loginSlice = createSlice({
@@ -80,6 +108,20 @@ export const loginSlice = createSlice({
         })
         .addCase(loginUser.rejected, (state, action) => {
           state.status = 'failed';
+          
+          console.log('From rejected ',action.payload);
+
+        })
+        .addCase(userRegister.pending, (state) => {
+          state.status = 'loading';
+        })
+        .addCase(userRegister.fulfilled, (state, action) => {
+          state.status = 'success';
+          //state.user = action.payload;
+        })
+        .addCase(userRegister.rejected, (state, action) => {
+          state.status = 'failed';
+          //state.error = payload.error;
           
           console.log('From rejected ',action.payload);
 
