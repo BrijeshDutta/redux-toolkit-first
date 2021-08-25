@@ -37,7 +37,7 @@ function ApiCallUi() {
         <div>
             <h1>Calling Api...</h1>
 
-            {status === 'success' && powerValuationDetails.map((item)=>{
+            {status === 'success' && powerValuationDetails[0].data.map((item)=>{
             return (
                 <div key={item.id}>{item.id } | {item.trade} | {item.begtime} | {item.endtime}</div>
             )

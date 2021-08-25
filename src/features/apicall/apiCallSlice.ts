@@ -34,7 +34,7 @@ export const getPowerValuationDetailsAsync = createAsyncThunk(
   async (obj, {dispatch}) => {
 
 
-    const response = await axios.get<PowerValuationDetailsModel[]>('https://etrmsapiapp.herokuapp.com/valuation/api/GetValuationResult/')
+    const response = await axios.get<PowerValuationDetailsModel[]>('http://127.0.0.1:8000/valuation/api/GetValuationResult/')
     // The value we return becomes the `fulfilled` action payload
     //console.log(response.data);
     return response.data;
